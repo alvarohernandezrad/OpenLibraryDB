@@ -58,8 +58,10 @@ public class Liburuak extends Application {
         stage.show();
     }
 
-    public void xehetasunakErakutsi(Book book){
-        xehetasunakController.datuakErakutsi(book);
+    public void xehetasunakErakutsi(String isbn){
+        xehetasunakController.datuakErakutsi(isbn); //liburu baten isbna emanda liburu horren datuak datu basetik lortu. UI-ko kontrolatzaileak datu hauek dagokion lekuetan kokatuko ditu.
+        stage.setScene(xehetasunakScene);
+        stage.show();
 
     }
 }

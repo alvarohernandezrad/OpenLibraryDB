@@ -24,13 +24,13 @@ java {
 
 application {
     mainModule = 'javafx' // name defined in module-info.java
-    mainClass = 'ehu.isad.Main'
+    mainClass = 'ehu.isad.Liburuak'
 }
 
 
 
 // ext.moduleName = 'gradlejavafxhelloworld'
-mainClassName = "$moduleName/ehu.isad.Main"
+mainClassName = "$moduleName/ehu.isad.Liburuak"
 
 
 javafx {

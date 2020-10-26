@@ -1,17 +1,27 @@
 package ehu.isad.controller.ui;
 
-import ehu.isad.Book;
 import ehu.isad.Liburuak;
+
+import ehu.isad.controller.db.AukerakKud;
+import ehu.isad.utils.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.fxml.Initializable;
+
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class XehetasunakKud implements Initializable {
@@ -54,6 +64,10 @@ public class XehetasunakKud implements Initializable {
   private Text txt_orriKop;
 
   @FXML
+  private ImageView irudia;
+
+
+  @FXML
   void onClick(ActionEvent event) {
     mainApp.mainErakutsi();
   }
@@ -63,8 +77,25 @@ public class XehetasunakKud implements Initializable {
     txt_izenburua.setWrappingWidth(500);
   }
 
-  public void datuakErakutsi(Book book){
+  public void datuakErakutsi(String isbn){
+    String book = AukerakKud.getInstance().lortuDatuak(isbn); //liburuaren isbn-arekin datuak jaitsiko ditugu datu basetik
+    String[] zatitu = book.split(","); //datuak ',' batekin daude banatuta. Lehenik izenburua, gero orri kopurua eta azkenik irudiaren izena.
+    txt_izenburua.setText(zatitu[0]);
+    txt_orriKop.setText(String.valueOf(zatitu[1]));
+    List<String> argitaletxeak = AukerakKud.getInstance().lortuArgitaletxeak(isbn); //berdina egingo dugu argitaletxeekin. List<String> batean gordeko ditugu
+    for(int i=0; i<argitaletxeak.size(); i++){
+      txt_argitaletxea.setText(txt_argitaletxea.getText()+","+argitaletxeak.get(i));
+    }
+    this.irudiaKargatu(zatitu[2]);
+  }
 
+  private void irudiaKargatu(String irudiIzena){
+    String imagePath = Utils.lortuEzarpenak().getProperty("pathToImages")+irudiIzena+".png";
+    try{
+      irudia.setImage(new Image(new FileInputStream(imagePath)));
+    }catch(FileNotFoundException fileNotFoundException){
+      fileNotFoundException.printStackTrace();
+    }
   }
 
 }

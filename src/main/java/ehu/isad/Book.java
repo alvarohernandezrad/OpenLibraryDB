@@ -3,27 +3,14 @@ package ehu.isad;
 import com.google.gson.Gson;
 import ehu.isad.utils.Sarea;
 public class Book {
-    String isbn;
-    String title;
-    String info_url;
-    String bib_key;
-    String preview_url;
-    String thumbnail_url;
-    Details details;
-
-    public Book(String isbn, String title) {
-        this.isbn = isbn;
-        this.title = title;
-    }
+    private String isbn;
+    private String thumbnail_url;
+    private Details details;
 
     @Override
     public String toString() {
         return "Book{" +
                 "isbn='" + isbn + '\'' +
-                ", title='" + title + '\'' +
-                ", info_url='" + info_url + '\'' +
-                ", bib_key='" + bib_key + '\'' +
-                ", preview_url='" + preview_url + '\'' +
                 ", thumbnail_url='" + thumbnail_url + '\'' +
                 ", details=" + details +
                 '}';
@@ -32,13 +19,25 @@ public class Book {
     public String getIsbn(){
         return isbn;
     }
-    public String getTitle(){
-        return title;
-    }
     public String getThumbnail_url(){
         return thumbnail_url;
     }
     public Details getDetails(){
         return details;
+    }
+
+    public Book getBook(String isbn){
+        Sarea sarea = new Sarea();
+        String line = sarea.readFromURL(isbn);
+        Gson gson = new Gson();
+        Book book = gson.fromJson(line,Book.class);
+        book.isbn = isbn;
+        return book;
+    }
+
+    public String irudiErtainaLortu(){
+        String irudia = this.thumbnail_url.substring(0,this.thumbnail_url.length()-5);
+        irudia = irudia + "M.jpg";
+        return irudia;
     }
 }

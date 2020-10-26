@@ -1,10 +1,12 @@
 package ehu.isad.utils;
 
-import javafx.scene.image.Image;
 
+
+import javax.imageio.ImageIO;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.awt.image.BufferedImage;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,16 +31,18 @@ public class Sarea {
             ioException.printStackTrace();
         }
         String[] zatiak = inputLine.split("ISBN:" + ISBN + "\": ");
-        inputLine = zatiak[1].substring(1, zatiak[1].length() - 1);
+        inputLine = zatiak[1].substring(0, zatiak[1].length() - 1);
         return inputLine;
     }
 
-    public Image createImage(String url) throws IOException {
-        String urlBerria = url.replace("-S.","-M.");
-        URLConnection conn = new URL(urlBerria).openConnection();
-        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36");
-        try (InputStream stream = conn.getInputStream()) {
-            return new Image(stream);
+    public void argazkiaGorde(String url,String fitxategia){
+        BufferedImage image;
+        try{
+            URL URL = new URL(url);
+            image = ImageIO.read(URL);
+            ImageIO.write(image,"png", new File(Utils.lortuEzarpenak().getProperty("pathToImages")+fitxategia+".png"));
+        }catch(IOException ioException){
+            ioException.printStackTrace();
         }
     }
 }
