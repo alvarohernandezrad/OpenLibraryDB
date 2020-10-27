@@ -21,29 +21,28 @@ public class AukerakKud {
 
     public List<String> lortuLiburuak() { //combo boxean liburen izenburuak jarriko ditugu
 
-        String query = "select isbn, izenburua from Liburua";
+        String query = "SELECT isbn, izenburua FROM Liburua";
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
         ResultSet rs = dbKudeatzaile.execSQL(query);
 
-        List<String> emaitza = new ArrayList<>(); //izenburuen (STRING) lista bat bueltatuko dugu.
+        List<String> izenburuak = new ArrayList<>(); //izenburuen (STRING) lista bat bueltatuko dugu.
         try {
             while (rs.next()) {
-                String izenburua = rs.getString("izenburua");
-                long isbn = rs.getLong("isbn");
-
+                String izenburua = rs.getString("izenburua"); //terminalean ikusiko ditugu liburua eta bere isbn-a
+                String isbn = rs.getString("isbn");
                 System.out.println(izenburua + " : " + isbn);
-                emaitza.add(izenburua); //izenburua gordeko dugu bakarrik. Izan ere combo boxean izenburuak agertuko dira bakarrik
+                izenburuak.add(izenburua); //izenburua gordeko dugu bakarrik. Izan ere combo boxean izenburuak agertuko dira bakarrik
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        return emaitza;
+        return izenburuak;
     }
 
     public String lortuIsbn(String liburuIzen) { //izena dugu. Orain datu basetik isbn-a eskuratuko dugu.
         String isbn = null;
-        String query = "select ISBN from Liburua where izenburua='" + liburuIzen + "'";
+        String query = "SELECT ISBN FROM Liburua WHERE izenburua='"+liburuIzen+"'";
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
         ResultSet rs = dbKudeatzaile.execSQL(query);
         try {
@@ -58,7 +57,7 @@ public class AukerakKud {
 
     public Boolean liburuaDago(String liburuIzen) { // liburuaren izena dugula, datu basean kargatuta dagoen begiratuko dugu
         boolean badago = false;
-        String query = "select orriKop from Liburua where izenburua='" + liburuIzen + "'"; //hasieratik izenburua eta isbn-a kargatu ditugunez liburuaren orri kopurua atertuko dugu
+        String query = "SELECT orriKop FROM Liburua WHERE izenburua='"+liburuIzen+"'"; //hasieratik izenburua eta isbn-a kargatu ditugunez liburuaren orri kopurua atertuko dugu
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
         ResultSet rs = dbKudeatzaile.execSQL(query);
         try {
@@ -73,7 +72,7 @@ public class AukerakKud {
     public void liburuaDatuBaseraIgo(String isbn) { //liburua lehen aldiz kargatuko dugu datu basean. Metodo honen bidez datu baseko "Liburua" taulan osatuko dugu.
         Book book = new Book();
         book = book.getBook(isbn);
-        String query = "update Liburua set subtitulua='" + book.getDetails().getSubtitle() + "',orriKop='" + book.getDetails().getNumber_of_pages() + "',irudia='" + isbn + "' where isbn='" + book.getIsbn() + "'";
+        String query = "UPDATE Liburua SET subtitulua='"+book.getDetails().getSubtitle()+"',orriKop='"+book.getDetails().getNumber_of_pages()+"',irudia='"+isbn+"' WHERE isbn='"+book.getIsbn()+"'";
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
         dbKudeatzaile.execSQL(query);
         this.irudiaKargatu(book);
@@ -89,16 +88,16 @@ public class AukerakKud {
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
         for(int i=0; i<book.getDetails().getPublishers().length;i++){
             if(!this.argitaletxeaDBDago(book.getDetails().getPublishers()[i])){
-                String query = "insert into Argitaletxea values (\""+book.getDetails().getPublishers()[i]+"\")";
+                String query = "INSERT INTO Argitaletxea VALUES (\""+book.getDetails().getPublishers()[i]+"\")"; //argitaletxeen izenak gordeko ditugu
                 dbKudeatzaile.execSQL(query);
             }
-            String q2 = "insert into Dauka values (\""+book.getDetails().getPublishers()[i]+"\",'"+book.getIsbn()+"')";
+            String q2 = "INSERT INTO Dauka values (\""+book.getDetails().getPublishers()[i]+"\",'"+book.getIsbn()+"')"; //liburuak eta argitaletxeak erlazionatzen dituen taulan liburu bakoitzeko isbn-a eta argitaletxea bakoitzeko izena gordeko ditugu (Primary Key-ak)
             dbKudeatzaile.execSQL(q2);
         }
     }
 
     public String lortuDatuak(String isbn) {
-        String query = "select izenburua, subtitulua, orriKop, irudia from Liburua where isbn='" + isbn + "'"; //ez dugu select * erabiliko arazoak ematen dituelako
+        String query = "SELECT izenburua, subtitulua, orriKop, irudia FROM Liburua WHERE isbn='"+isbn+"'"; //ez dugu select * erabiliko arazoak ematen dituelako
         String datuak = "";
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
         ResultSet rs = dbKudeatzaile.execSQL(query);
@@ -115,7 +114,7 @@ public class AukerakKud {
     }
 
     public List<String> lortuArgitaletxeak(String isbn){
-        String query = "select argitaletxea from Dauka where isbn='"+isbn+"'";
+        String query = "SELECT argitaletxea FROM Dauka WHERE isbn='"+isbn+"'"; //liburu bakoitzeko bere argitaletxeak gorde
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
         ResultSet rs = dbKudeatzaile.execSQL(query);
         List<String> argitaletxeak = new ArrayList<String>();
@@ -130,9 +129,9 @@ public class AukerakKud {
         return argitaletxeak;
     }
 
-    private boolean argitaletxeaDBDago(String argitaletxe){
+    private boolean argitaletxeaDBDago(String argitaletxe){ //argitaletxea datu basean gordeta dagoen begiratuko da
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
-        String query = "select izena from Argitaletxea where izena=\""+argitaletxe+"\""; //atributu bakarra dugu, beraz konprobaketa horrela egingo dugu *SELECT izena WHERE izena*
+        String query = "SELECT izena FROM Argitaletxea WHERE izena=\""+argitaletxe+"\""; //atributu bakarra dugu, beraz konprobaketa horrela egingo dugu *SELECT izena WHERE izena*
         ResultSet rs = dbKudeatzaile.execSQL(query);
         boolean badago = false;
         try{

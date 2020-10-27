@@ -9,19 +9,19 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.controller.ui.XehetasunakKud">
    <children>
-      <Label fx:id="lbl_xehetasunak" layoutX="118.0" layoutY="57.0" text="LIBURUAREN XEHETASUNAK:">
+      <Label fx:id="lbl_xehetasunak" layoutX="118.0" layoutY="31.0" text="LIBURUAREN XEHETASUNAK:">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="lbl_izenburua" layoutX="100.0" layoutY="131.0" text="Izenburua:" />
-      <Label fx:id="lbl_argitaletxea" layoutX="93.0" layoutY="165.0" text="Argitaletxea:" />
-      <Label fx:id="lbl_orriKop" layoutX="92.0" layoutY="200.0" text="Orri kopurua:" />
-      <Label fx:id="lbl_irudia" layoutX="114.0" layoutY="239.0" text="Irudia:" />
-      <Button fx:id="btn_atzera" layoutX="270.0" layoutY="363.0" mnemonicParsing="false" onAction="#onClick" text="Atzera" />
-      <Text fx:id="txt_izenburua" layoutX="245.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="171.0" />
-      <Text fx:id="txt_argitaletxea" layoutX="245.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="171.0" />
-      <Text fx:id="txt_orriKop" layoutX="241.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="178.7294921875" />
-      <ImageView fx:id="irudia" fitHeight="124.0" fitWidth="197.0" layoutX="241.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lbl_izenburua" layoutX="101.0" layoutY="100.0" text="Izenburua:" />
+      <Label fx:id="lbl_argitaletxea" layoutX="94.0" layoutY="138.0" text="Argitaletxea:" />
+      <Label fx:id="lbl_orriKop" layoutX="93.0" layoutY="176.0" text="Orri kopurua:" />
+      <Label fx:id="lbl_irudia" layoutX="115.0" layoutY="223.0" text="Irudia:" />
+      <Button fx:id="btn_atzera" layoutX="270.0" layoutY="360.0" mnemonicParsing="false" onAction="#onClick" text="Atzera" />
+      <Text fx:id="txt_izenburua" layoutX="245.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="171.0" />
+      <Text fx:id="txt_argitaletxea" layoutX="245.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="171.0" />
+      <Text fx:id="txt_orriKop" layoutX="250.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="178.7294921875" />
+      <ImageView fx:id="irudia" fitHeight="124.0" fitWidth="197.0" layoutX="241.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
