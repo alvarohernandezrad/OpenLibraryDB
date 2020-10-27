@@ -92,7 +92,7 @@ public class AukerakKud {
                 String query = "insert into Argitaletxea values (\""+book.getDetails().getPublishers()[i]+"\")";
                 dbKudeatzaile.execSQL(query);
             }
-            String q2 = "insert into Dauka values (\""+book.getDetails().getPublishers()[i]+"\","+book.getIsbn()+"')";
+            String q2 = "insert into Dauka values (\""+book.getDetails().getPublishers()[i]+"\",'"+book.getIsbn()+"')";
             dbKudeatzaile.execSQL(q2);
         }
     }
@@ -119,6 +119,7 @@ public class AukerakKud {
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
         ResultSet rs = dbKudeatzaile.execSQL(query);
         List<String> argitaletxeak = new ArrayList<String>();
+        argitaletxeak.clear();
         try{
             while (rs.next()){
                 argitaletxeak.add(rs.getString("argitaletxea"));

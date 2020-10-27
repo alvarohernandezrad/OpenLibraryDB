@@ -34,7 +34,6 @@ CREATE TABLE `Argitaletxea` (
 
 LOCK TABLES `Argitaletxea` WRITE;
 /*!40000 ALTER TABLE `Argitaletxea` DISABLE KEYS */;
-INSERT INTO `Argitaletxea` VALUES ('O\'Reilly Media');
 /*!40000 ALTER TABLE `Argitaletxea` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -50,7 +49,7 @@ CREATE TABLE `Dauka` (
   `isbn` varchar(50) NOT NULL,
   PRIMARY KEY (`isbn`,`argitaletxea`),
   KEY `fk_dauka_argitaletxea_idx` (`argitaletxea`),
-  CONSTRAINT `fk_dauka_argitaletxea` FOREIGN KEY (`argitaletxea`) REFERENCES `Argitaletxea` (`izena`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_dauka_argitaletxea` FOREIGN KEY (`argitaletxea`) REFERENCES `Argitaletxea` (`izena`),
   CONSTRAINT `fk_dauka_liburua` FOREIGN KEY (`isbn`) REFERENCES `Liburua` (`isbn`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -87,7 +86,7 @@ CREATE TABLE `Liburua` (
 
 LOCK TABLES `Liburua` WRITE;
 /*!40000 ALTER TABLE `Liburua` DISABLE KEYS */;
-INSERT INTO `Liburua` VALUES ('1491910399','R for Data Science','',522,'1491910399'),('1491946008','Fluent Python','',792,'1491946008'),('1491978236','Natural Language Processing with PyTorch',NULL,NULL,NULL),('9781491906187','Data Algorithms',NULL,NULL,NULL),('9781491920497','Blockchain: Blueprint for a New Economy',NULL,NULL,NULL);
+INSERT INTO `Liburua` VALUES ('1491910399','R for Data Science',NULL,NULL,NULL),('1491946008','Fluent Python',NULL,NULL,NULL),('1491978236','Natural Language Processing with PyTorch',NULL,NULL,NULL),('9781491906187','Data Algorithms',NULL,NULL,NULL),('9781491920497','Blockchain: Blueprint for a New Economy',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `Liburua` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -100,4 +99,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-27 18:54:29
+-- Dump completed on 2020-10-27 20:03:23

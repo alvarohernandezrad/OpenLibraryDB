@@ -84,7 +84,8 @@ public class XehetasunakKud implements Initializable {
     txt_orriKop.setText(String.valueOf(zatitu[1]));
     List<String> argitaletxeak = AukerakKud.getInstance().lortuArgitaletxeak(isbn); //berdina egingo dugu argitaletxeekin. List<String> batean gordeko ditugu
     for(int i=0; i<argitaletxeak.size(); i++){
-      txt_argitaletxea.setText(txt_argitaletxea.getText()+","+argitaletxeak.get(i));
+      //txt_argitaletxea.setText(txt_argitaletxea.getText()+", "+argitaletxeak.get(i));
+      txt_argitaletxea.setText(argitaletxeak.get(i));
     }
     this.irudiaKargatu(zatitu[2]);
   }

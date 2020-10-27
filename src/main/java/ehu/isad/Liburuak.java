@@ -28,7 +28,7 @@ public class Liburuak extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         pantailakKargatu();
-        stage.setTitle("OpenLibrary APIa aztertzen Datu Baseak erbailiz");
+        stage.setTitle("OpenLibrary APIa aztertzen Datu Baseak erabiliz");
         stage.setScene(aukerakScene);
         stage.show();
     }
