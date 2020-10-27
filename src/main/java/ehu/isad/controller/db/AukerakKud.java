@@ -21,7 +21,7 @@ public class AukerakKud {
 
     public List<String> lortuLiburuak() { //combo boxean liburen izenburuak jarriko ditugu
 
-        String query = "select isbn,title from Liburua";
+        String query = "select isbn, izenburua from Liburua";
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
         ResultSet rs = dbKudeatzaile.execSQL(query);
 
@@ -70,18 +70,31 @@ public class AukerakKud {
         return badago;
     }
 
-    public void liburuaDatuBaseraIgo(String isbn) { //liburua lehen aldiz kargatuko dugu datu basean
+    public void liburuaDatuBaseraIgo(String isbn) { //liburua lehen aldiz kargatuko dugu datu basean. Metodo honen bidez datu baseko "Liburua" taulan osatuko dugu.
         Book book = new Book();
         book = book.getBook(isbn);
         String query = "update Liburua set subtitulua='" + book.getDetails().getSubtitle() + "',orriKop='" + book.getDetails().getNumber_of_pages() + "',irudia='" + isbn + "' where isbn='" + book.getIsbn() + "'";
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
         dbKudeatzaile.execSQL(query);
         this.irudiaKargatu(book);
+        this.argitaletxeakDatuBaseraIgo(book);
     }
 
     private void irudiaKargatu(Book book) {
         Sarea sarea = new Sarea();
         sarea.argazkiaGorde(book.irudiErtainaLortu(), String.valueOf(book.getIsbn()));
+    }
+
+    private void argitaletxeakDatuBaseraIgo(Book book){
+        DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
+        for(int i=0; i<book.getDetails().getPublishers().length;i++){
+            if(!this.argitaletxeaDBDago(book.getDetails().getPublishers()[i])){
+                String query = "insert into Argitaletxea values (\""+book.getDetails().getPublishers()[i]+"\")";
+                dbKudeatzaile.execSQL(query);
+            }
+            String q2 = "insert into Dauka values (\""+book.getDetails().getPublishers()[i]+"\","+book.getIsbn()+"')";
+            dbKudeatzaile.execSQL(q2);
+        }
     }
 
     public String lortuDatuak(String isbn) {
@@ -115,4 +128,18 @@ public class AukerakKud {
         }
         return argitaletxeak;
     }
+
+    private boolean argitaletxeaDBDago(String argitaletxe){
+        DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
+        String query = "select izena from Argitaletxea where izena=\""+argitaletxe+"\""; //atributu bakarra dugu, beraz konprobaketa horrela egingo dugu *SELECT izena WHERE izena*
+        ResultSet rs = dbKudeatzaile.execSQL(query);
+        boolean badago = false;
+        try{
+           badago = rs.next();
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return badago;
+    }
+
 }

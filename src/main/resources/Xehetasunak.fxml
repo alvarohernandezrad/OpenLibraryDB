@@ -22,6 +22,6 @@
       <Text fx:id="txt_izenburua" layoutX="245.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="171.0" />
       <Text fx:id="txt_argitaletxea" layoutX="245.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="171.0" />
       <Text fx:id="txt_orriKop" layoutX="241.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="178.7294921875" />
-      <ImageView fx:id="irudia" fitHeight="124.0" fitWidth="197.0" layoutX="202.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="irudia" fitHeight="124.0" fitWidth="197.0" layoutX="241.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
